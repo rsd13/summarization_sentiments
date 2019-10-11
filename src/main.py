@@ -1,5 +1,7 @@
 from restaurante import Restaurante
-from src.bbdd.pais import Pais
+import bbdd.pais
+#from bbdd.ciudad import Ciudad
+
 
 
 def get_restaurants(url):
@@ -11,7 +13,7 @@ def get_restaurants(url):
     url = "https://www.tripadvisor.es/Restaurant_Review-g1064230-d12741934-Reviews-or180-Goiko_Grill-Alicante_Costa_Blanca_Province_of_Alicante_Valencian_Country.html"
     restaurante = Restaurante(url=url)
     restaurante.get_restaurante()
-    return restaurante
+    return restaurantes
 
 
 def insert_datas(restaurante):
@@ -20,10 +22,10 @@ def insert_datas(restaurante):
     """
 
     #inserto el pais
-    pais = Pais().insert_pais(restaurante.pais)
+    pais = bbdd.pais.Pais().insert_pais(restaurante.pais)
 
 
-def main():
+"""def main():
     print("adsd")
     restaurante = get_restaurants("")
 
@@ -33,5 +35,9 @@ def main():
 
 
 if __name__ == '__main__':
-    print("adsd")
-    main()
+    #print("adsd")
+    ciudad = Ciudad().insert_ciudad("Madrid", "España")
+    #main()"""
+
+"""ciudad = Ciudad().insert_ciudad("Madrid", "España")
+print("dssffsdfsdf")"""
