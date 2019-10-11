@@ -22,7 +22,6 @@ class Pais:
         """
         inserta el pais en la base de datos, primero se comprueba si existe para insertarlo
         :param pais: nombre del pais a insertar
-        :return:
         """
         # comprobamos si existe
         self.cursor.execute("select * " +
@@ -34,6 +33,22 @@ class Pais:
         lineas = self.cursor.fetchall()
         # si no existe esa fecha se inserta
         if len(lineas) == 0:
-            print("sdfsdgs")
+
             self.cursor.execute("INSERT INTO pais(nombre) VALUES (?)", (pais, ))
             self.bbdd.commit()
+
+
+    def get_id(self, nombre):
+        """
+        dado un nombre de pais que recoja el id
+        :param nombre: el nombre de pais a buscar
+        """
+        print(nombre)
+        self.cursor.execute("""
+                                SELECT id
+                                FROM pais 
+                                WHERE nombre=?""", (nombre,))
+        id = self.cursor.fetchone()[0]
+        return id
+
+

@@ -69,10 +69,9 @@ class BBDD:
         query = """ CREATE TABLE IF NOT EXISTS local ( 
                         id integer PRIMARY KEY AUTOINCREMENT, 
                         nombre text NOT NULL,
-                        id_pais integer,
                         id_ciudad integer,
+                        direccion text,
                         tipo text,
-                        FOREIGN KEY(id_pais) REFERENCES pais(id),
                         FOREIGN KEY(id_ciudad) REFERENCES ciudad(id_ciudad),
                         constraint CK_TIPI check (tipo == "restaurante" or tipo == "hotel")
                         
@@ -132,7 +131,7 @@ class BBDD:
 
         query = """ CREATE TABLE IF NOT EXISTS ciudad ( 
                                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                id_pais INTEGER NOT NULL UNIQUE,
+                                id_pais INTEGER NOT NULL,
                                 nombre TEXT NOT NULL,
                                 FOREIGN KEY(id_pais) REFERENCES pais(id)
                             );"""

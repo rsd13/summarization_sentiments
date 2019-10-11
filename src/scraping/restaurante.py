@@ -1,4 +1,4 @@
-from local import Local
+from scraping.local import Local
 from bs4 import BeautifulSoup
 from selenium import webdriver
 import time
@@ -12,14 +12,12 @@ class Restaurante(Local):
         self.driver = driver
         self.url = url
 
-
     def get_url(self):
         return self.url
 
     def create_drive(self):
         """
         función que crea el driver de Selenium para la conexión a una url
-        :return:
         """
         try:
             self.driver.get(self.get_url())
@@ -27,24 +25,24 @@ class Restaurante(Local):
             raise "Error a conectar con la url: {}".format(ValueError)
         return self
 
-
     def get_name_city_country(self):
         """
         función que crea el driver de Selenium para la conexión a una url
-        :return:
         """
         name_restaurant = self.driver.find_element_by_css_selector("h1[class='header heading masthead masthead_h1 ']")
         name_restaurant, place_restaurant = name_restaurant.text.split(",")
         pais = self.driver.find_element_by_css_selector("span[class='country-name']").text
+        direccion =self.driver.find_element_by_css_selector("span[class='street-address']").text
+        direccion += self.driver.find_element_by_css_selector("span[class='locality']").text
 
-        self.nombre, self.ciudad, self.pais = name_restaurant, place_restaurant[1:], pais
+        self.nombre, self.ciudad = name_restaurant, place_restaurant[1:]
+        self.pais, self.direccion = pais, direccion[:-1]
+        self.print_info_basic()
 
     def get_reviews(self, html):
         """
        función que deevuelve todas 10 reviews d eun restaurante
        """
-
-
         # recojo el grupo de reviews
         soup = BeautifulSoup(html, 'html.parser')
         group_reviews = soup.find("div", ["listContainer hide-more-mobile"])
