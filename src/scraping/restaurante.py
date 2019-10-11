@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 import time
 
-class Supervisor(Local):
+class Restaurante(Local):
     """Clase que representa a un Supervisor"""
 
     def __init__(self, driver=webdriver.Firefox(), url=""):
@@ -107,7 +107,7 @@ class Supervisor(Local):
 
 url = "https://www.tripadvisor.es/Restaurant_Review-g1064230-d12741934-Reviews-or180-Goiko_Grill-Alicante_Costa_Blanca_Province_of_Alicante_Valencian_Country.html"
 
-s = Supervisor(url=url)
+s = get_all_reviews(url=url)
 
 s.get_restaurante()
 print(s.reviews)
