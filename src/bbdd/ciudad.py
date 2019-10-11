@@ -31,7 +31,6 @@ class Ciudad:
                             where nombre=? """, (
                                 ciudad,))
 
-
         rows = self.cursor.fetchall()
         # si no existe esa fecha se inserta
 

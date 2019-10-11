@@ -26,7 +26,7 @@ class Local:
         :param ciudad: ciudad del local
         :return:
         """
-        
+
         # busco el id de la ciudad
         id_ciudad = Ciudad().get_id(ciudad)
 

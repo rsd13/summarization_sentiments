@@ -3,6 +3,23 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 import time
 
+
+meses = {
+    "enero": 1,
+    "febrero": 2,
+    "marzo": 3,
+    "abril": 4,
+    "mayo": 5,
+    "junio": 6,
+    "julio": 7,
+    "agosto": 8,
+    "septiembre": 9,
+    "octubre": 10,
+    "noviembre": 11,
+    "diciembre": 12
+}
+
+
 class Restaurante(Local):
     """Clase que representa a un Supervisor"""
 
@@ -55,8 +72,9 @@ class Restaurante(Local):
                 datas_reviews = review.find("div", ["ui_column is-9"])
                 dic["texto"] = datas_reviews.find("p", ["partial_entry"]).text
                 date = datas_reviews.find("div", ["prw_rup prw_reviews_stay_date_hsx"]).text
-                dic["fecha"] = date.split(":")[1][1:]
-
+                date= date.split(":")[1][1:]
+                date = date.split(" ")
+                dic["mes"], dic["año"] = meses[date[0]], int(date[2])
                 self.reviews.append(dic)
             except:
                 raise("Error a recoger las reviews")
@@ -79,16 +97,19 @@ class Restaurante(Local):
                     print("Error, al dar click al comentario")
                     pass
 
-                time.sleep(2)
+                time.sleep(1)
                 html = self.driver.page_source
                 self.get_reviews(html)
 
                 next = self.driver.find_element_by_css_selector("a[class='nav next taLnk ui_button primary']")
-                time.sleep(1)
-                next.click()
 
+                next.click()
+                time.sleep(1)
             # si no encuentra el boton salimos del bucle
             except:
+
+                print(len(self.reviews))
+                time.sleep(1)
                 self.driver.close()
                 break
 

@@ -2,7 +2,7 @@ from scraping.restaurante import Restaurante
 import bbdd.pais
 from bbdd.ciudad import Ciudad
 from bbdd.local import Local as BBDD_Local
-
+from bbdd.reviews import Reviews
 
 def get_restaurants(url):
     """
@@ -15,7 +15,6 @@ def get_restaurants(url):
     restaurante.get_restaurante()
     return restaurante
 
-
 def insert_datas(restaurante):
     """
     método que con la información del objeto restaurante lo introduce en la base de datos.
@@ -25,6 +24,10 @@ def insert_datas(restaurante):
     bbdd.pais.Pais().insert_pais(restaurante.pais)
     Ciudad().insert_ciudad(restaurante.ciudad, restaurante.pais)
     BBDD_Local().insert_local(restaurante.nombre, restaurante.ciudad, restaurante.direccion, "restaurante")
+
+    for i,review in enumerate(restaurante.reviews):
+        print(i)
+        Reviews().insert_reviews(review)
 
 def main():
     restaurante = get_restaurants("")
