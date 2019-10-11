@@ -28,7 +28,7 @@ class BBDD:
         función que elimina todas las tablas
         """
         #el orden es al contrario al que se crea
-        tables = ["local_reviews", "revies", "local", "ciudad", "pais"]
+        tables = ["local_reviews", "reviews", "local", "pais", "ciudad"]
 
         for table in tables:
             query = "drop table " + table
@@ -130,14 +130,18 @@ class BBDD:
 
         query = """ CREATE TABLE IF NOT EXISTS ciudad ( 
                                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                id_pais INTEGER NOT NULL,
+                                id_pais INTEGER NOT NULL UNIQUE,
                                 nombre TEXT NOT NULL,
-                                FOREIGN KEY(id_pais) REFERENCES pais(id),
-                                PRIMARY KEY (id, id_pais)
+                                FOREIGN KEY(id_pais) REFERENCES pais(id)
                             );"""
 
         self.exec_create_table(query, "ciudad")
 
 
-bbdd = BBDD()
-bbdd.create_tables()
+
+
+def main():
+
+    bbdd = BBDD()
+    bbdd.create_tables()
+    bbdd.drop_tables()
