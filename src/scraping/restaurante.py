@@ -38,7 +38,61 @@ class Supervisor(Local):
         pais = self.driver.find_element_by_css_selector("span[class='country-name']").text
 
         self.nombre, self.ciudad, self.pais = name_restaurant, place_restaurant[1:], pais
-        self.print_info_basic()
+
+    def get_reviews(self, html):
+        """
+       función que deevuelve todas 10 reviews d eun restaurante
+       """
+
+
+        # recojo el grupo de reviews
+        soup = BeautifulSoup(html, 'html.parser')
+        group_reviews = soup.find("div", ["listContainer hide-more-mobile"])
+        reviews = group_reviews.find_all("div", ["review-container"])
+
+        #recojo todos los reviews junto a su fecha
+        for review in reviews:
+            try:
+                dic = {}
+                datas_reviews = review.find("div", ["ui_column is-9"])
+                dic["texto"] = datas_reviews.find("p", ["partial_entry"]).text
+                date = datas_reviews.find("div", ["prw_rup prw_reviews_stay_date_hsx"]).text
+                dic["fecha"] = date.split(":")[1][1:]
+
+                self.reviews.append(dic)
+            except:
+                raise("Error a recoger las reviews")
+
+
+    def get_all_reviews(self):
+        """
+        función que deevuelve todas las reviews de un restaurante
+        """
+        while True:
+            html = ""
+            try:
+
+                group_reviews = self.driver.find_elements_by_class_name("ulBlueLinks");
+
+                try:
+                    for group in group_reviews:
+                        group.click()
+                except:
+                    print("Error, al dar click al comentario")
+                    pass
+
+                time.sleep(2)
+                html = self.driver.page_source
+                self.get_reviews(html)
+
+                next = self.driver.find_element_by_css_selector("a[class='nav next taLnk ui_button primary']")
+                time.sleep(1)
+                next.click()
+
+            # si no encuentra el boton salimos del bucle
+            except:
+                self.driver.close()
+                break
 
     def get_restaurante(self):
         """
@@ -48,9 +102,12 @@ class Supervisor(Local):
         self.create_drive()
         #consigo el nombre, pais y ciudad
         self.get_name_city_country()
+        #recojo las reviews
+        self.get_all_reviews()
 
 url = "https://www.tripadvisor.es/Restaurant_Review-g1064230-d12741934-Reviews-or180-Goiko_Grill-Alicante_Costa_Blanca_Province_of_Alicante_Valencian_Country.html"
 
 s = Supervisor(url=url)
 
 s.get_restaurante()
+print(s.reviews)
