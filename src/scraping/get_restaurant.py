@@ -5,7 +5,7 @@ import time
 
 #url = "https://www.tripadvisor.es/Restaurant_Review-g1064230-d994715-Reviews-Piripi-Alicante_Costa_Blanca_Province_of_Alicante_Valencian_Country.html"
 url = "https://www.tripadvisor.es/Restaurant_Review-g1064230-d12741934-Reviews-or180-Goiko_Grill-Alicante_Costa_Blanca_Province_of_Alicante_Valencian_Country.html"
-def get_restaurant(page,result):
+def get_restaurant(page, result):
 
 
     #page = requests.get(url)
@@ -30,16 +30,8 @@ def get_restaurant(page,result):
 
             result.append(dic)
 
-
-
         except:
-
             pass
-
-    for k in result:
-        print(k)
-        print("-------")
-
 
 
 
@@ -59,8 +51,13 @@ def create_drive():
 
 
 def get_restaurant_selenium():
-    result = []
+
     driver = create_drive()
+
+    name_restaurant = next = driver.find_element_by_css_selector("h1[class='header heading masthead masthead_h1 ']")
+    name_restaurant, place_restaurant = name_restaurant.text.split(",")
+    result = [name_restaurant, place_restaurant[1:0]]
+
 
     while True:
         html = ""
@@ -78,7 +75,7 @@ def get_restaurant_selenium():
             time.sleep(2)
             html = driver.page_source
             get_restaurant(html, result)
-
+            break
 
             next = driver.find_element_by_css_selector("a[class='nav next taLnk ui_button primary']")
             time.sleep(1)
