@@ -105,9 +105,4 @@ class Restaurante(Local):
         #recojo las reviews
         self.get_all_reviews()
 
-url = "https://www.tripadvisor.es/Restaurant_Review-g1064230-d12741934-Reviews-or180-Goiko_Grill-Alicante_Costa_Blanca_Province_of_Alicante_Valencian_Country.html"
 
-s = get_all_reviews(url=url)
-
-s.get_restaurante()
-print(s.reviews)

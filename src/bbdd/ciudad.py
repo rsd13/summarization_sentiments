@@ -1,7 +1,6 @@
 
 
-
-class Local:
+class Ciudad:
 
     def __init__(self):
         self.nombre = None
@@ -11,6 +10,4 @@ class Local:
 
     def print_info_basic(self):
         """función que imprime el nombre, ciudad y pais"""
-        print("Restaurante: {} en {}, {}".format(self.nombre, self.ciudad, self.pais))
-
-
+        print("Restaurante: {} en {}, {}".format(self.nombre,self.ciudad,self.pais))

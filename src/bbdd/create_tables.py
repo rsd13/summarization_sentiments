@@ -71,8 +71,10 @@ class BBDD:
                         nombre text NOT NULL,
                         id_pais integer,
                         id_ciudad integer,
+                        tipo text,
                         FOREIGN KEY(id_pais) REFERENCES pais(id),
-                        FOREIGN KEY(id_ciudad) REFERENCES ciudad(id_ciudad)
+                        FOREIGN KEY(id_ciudad) REFERENCES ciudad(id_ciudad),
+                        constraint CK_TIPI check (tipo == "restaurante" or tipo == "hotel")
                         
                     );"""
 
@@ -137,11 +139,13 @@ class BBDD:
 
         self.exec_create_table(query, "ciudad")
 
-
-
-
 def main():
 
     bbdd = BBDD()
     bbdd.create_tables()
-    bbdd.drop_tables()
+    #bbdd.drop_tables()
+
+if __name__ == '__main__':
+    main()
+
+
