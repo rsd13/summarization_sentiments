@@ -3,27 +3,63 @@ import os
 
 
 class BBDD:
+    """
+    Clase que administra la creación y la eliminación de tablas
+    """
     # formado por nombre,codProvincia,codigo
 
     def __init__(self, name="tripadvisor.db"):
         # ruta de la base de datos
+        """
+        constructor donde se crea el cursor dee la base de datos. Para que funcione
+        la base de datos tiene que estar en el mismo directorio del fichero.
+        :param name: el nombre de la base de datos
+        """
         try:
             dir_path = os.path.dirname(os.path.abspath(__file__))
-            print(dir_path)
             self.bbdd = sqlite3.connect(dir_path + "/" + name, timeout=10)
             self.bbdd.row_factory = sqlite3.Row
             self.cursor = self.bbdd.cursor()
         except:
             raise("Error a conectar a la base de datos.")
 
+    def drop_tables(self):
+        """
+        función que elimina todas las tablas
+        """
+        #el orden es al contrario al que se crea
+        tables = ["local_reviews", "revies", "local", "ciudad", "pais"]
+
+        for table in tables:
+            query = "drop table " + table
+            try:
+                self.cursor.execute(query)
+            except NameError:
+                raise ("Error a borrar la tabla {}: {}".format(table, NameError))
+
+
     def create_tables(self):
         """
         crea todas las tablas automáticamente
         """
-
+        self.create_pais()
+        self.create_ciudad()
         self.create_local()
         self.create_reviews()
         self.create_local_reviews()
+
+    def exec_create_table(self, query, name):
+        """
+        Ejecuta una query para crear una tabla cualquiera
+
+        :param query: query para crear la tabla
+        :param name: nombre de la tabla
+        """
+
+        try:
+            self.cursor.execute(query)
+        except NameError:
+            raise("Error a crear la tabla {}: {}".format(name, NameError))
 
     def create_local(self):
         """
@@ -32,7 +68,12 @@ class BBDD:
 
         query = """ CREATE TABLE IF NOT EXISTS local ( 
                         id integer PRIMARY KEY AUTOINCREMENT, 
-                        nombre text NOT NULL
+                        nombre text NOT NULL,
+                        id_pais integer,
+                        id_ciudad integer,
+                        FOREIGN KEY(id_pais) REFERENCES pais(id),
+                        FOREIGN KEY(id_ciudad) REFERENCES ciudad(id_ciudad)
+                        
                     );"""
 
         self.exec_create_table(query, "local")
@@ -70,18 +111,33 @@ class BBDD:
 
         self.exec_create_table(query, "local_reviews")
 
-
-    def exec_create_table(self, query, name):
+    def create_pais(self):
         """
-        Ejecuta una query para crear una tabla cualquiera
-
-        :param query: query para crear la tabla
-        :param name: nombre de la tabla
+        crea la tabla pais
         """
 
-        try:
-            self.cursor.execute(query)
-        except NameError:
-            raise("Error a crear la tabla {}: {}".format(name, NameError))
+        query = """ CREATE TABLE IF NOT EXISTS pais ( 
+                                id INTEGER  PRIMARY KEY AUTOINCREMENT,
+                                nombre TEXT NOT NULL
+                            );"""
+
+        self.exec_create_table(query, "pais")
+
+    def create_ciudad(self):
+        """
+         crea la tabla ciudad con restriccion de id a pais
+        """
+
+        query = """ CREATE TABLE IF NOT EXISTS ciudad ( 
+                                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                id_pais INTEGER NOT NULL,
+                                nombre TEXT NOT NULL,
+                                FOREIGN KEY(id_pais) REFERENCES pais(id),
+                                PRIMARY KEY (id, id_pais)
+                            );"""
+
+        self.exec_create_table(query, "ciudad")
+
+
 bbdd = BBDD()
 bbdd.create_tables()
