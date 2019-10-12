@@ -43,7 +43,6 @@ class Pais:
         dado un nombre de pais que recoja el id
         :param nombre: el nombre de pais a buscar
         """
-        print(nombre)
         self.cursor.execute("""
                                 SELECT id
                                 FROM pais 
