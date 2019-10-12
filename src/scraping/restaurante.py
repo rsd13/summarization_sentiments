@@ -1,6 +1,5 @@
 from scraping.local import Local
 from bs4 import BeautifulSoup
-from selenium import webdriver
 import time
 
 
@@ -23,10 +22,9 @@ meses = {
 class Restaurante(Local):
     """Clase que representa a un Supervisor"""
 
-    def __init__(self, driver=webdriver.Firefox(), url=""):
+    def __init__(self, url=""):
         """Constructor de clase restaurante"""
         Local.__init__(self)
-        self.driver = driver
         self.url = url
 
     def get_url(self):
@@ -104,13 +102,13 @@ class Restaurante(Local):
                 next = self.driver.find_element_by_css_selector("a[class='nav next taLnk ui_button primary']")
 
                 next.click()
-                time.sleep(1)
+                time.sleep(2.5)
             # si no encuentra el boton salimos del bucle
             except:
 
                 print(len(self.reviews))
-                time.sleep(1)
-                self.driver.close()
+                time.sleep(2.5)
+
                 break
 
     def get_restaurante(self):

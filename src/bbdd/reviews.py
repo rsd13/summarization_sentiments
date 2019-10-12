@@ -1,6 +1,5 @@
 import sqlite3
 import os
-from bbdd.ciudad import Ciudad
 
 
 class Reviews:
@@ -26,7 +25,7 @@ class Reviews:
         :param comentario: información del review
         """
         comentario, mes, año = review["texto"], review["mes"], review["año"]
-        rows = self.check_mes(comentario, mes, año)
+        rows = self.check_review(comentario, mes, año)
         print(comentario)
         # si no existe lo introducimos
         if len(rows) == 0:
@@ -36,7 +35,7 @@ class Reviews:
 
         # busco el si existe por nombre y por dirección
 
-    def check_mes(self, comentario, mes, año):
+    def check_review(self, comentario, mes, año):
         """
         función que comprueba si existe una review e
         :param comentario: nombre del local
@@ -53,5 +52,7 @@ class Reviews:
                                 """, (comentario, mes, año))
         rows = self.cursor.fetchall()
         return rows
+
+
 
 

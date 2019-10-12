@@ -60,6 +60,7 @@ class Local:
                                 
                                 """, (nombre,ciudad, direccion))
 
-        return self.cursor.fetchall()
+        rows = self.cursor.fetchall()
+        return rows
 
 
