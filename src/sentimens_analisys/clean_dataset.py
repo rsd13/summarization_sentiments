@@ -21,7 +21,7 @@ def clean_words(col, nlp):
         if "@" not in text and  "http" not in text and "#" not in text:
             if token.pos_ == "NOUN" or token.pos_ == "VERB" or \
                     token.pos_ == "ADJ" or token.pos_ == "ADV":
-                newText += token.lemma_ + " "
+                newText += token.lemma_.lower() + " "
 
     if newText != "":
 
