@@ -5,8 +5,15 @@
     <title>Insert</title>
 </head>
 <body>
-<p>
-    Local insertado
-</p>
+
+    {% if alert == False %}
+        <p> Restaurante insertado correctamente!💃🏼💃🏼💃🏼 </p>
+    {% else %}
+        <p> Error a insertar. Introduce una url de restaurantes valida de tripadvisor. </p>
+    {% endif %}
+
+    <a href="/sumtravel/find_restaurant">Volver</a>
+
+
 </body>
 </html>

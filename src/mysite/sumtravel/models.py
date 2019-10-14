@@ -22,8 +22,8 @@ class Local(models.Model):
 
 
 class Review(models.Model):
-    dirección = models.CharField(max_length=300)
-    mes = models.IntegerField
-    año = models.IntegerField
+    comentario = models.CharField(max_length=5000)
+    mes = models.IntegerField()
+    año = models.IntegerField()
     local = models.ManyToManyField(Local)
 

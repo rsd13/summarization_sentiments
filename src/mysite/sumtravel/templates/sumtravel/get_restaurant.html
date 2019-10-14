@@ -20,26 +20,27 @@
         </li>
       </ul>
     </nav>
+    <div class="alert" alert={{ alert }}>
+        <div class="container">
+            <form method="GET" action="find_restaurant/insert/">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-12 col-md-9">
+                        <label > Consigue un restaurante </label>
+                        <input type="text" class="form-control"  name="url"  placeholder="url del restaurante">
+                        <small  class="form-text text-muted">Introduce una url de restaurante de tripadvisor.</small>
+                    </div>
 
-    <div class="container">
-        <form method="GET" action="find_restaurant/insert/">
-            {% csrf_token %}
-            <div class="row">
-                <div class="col-12 col-md-9">
-                    <label > Consigue un restaurante </label>
-                    <input type="text" class="form-control"  name="url"  placeholder="url del restaurante">
-                    <small  class="form-text text-muted">Introduce una url de restaurante de tripadvisor.</small>
-                </div>
-
-                <div class="col-12 col-md-3 ">
-                    <div class="input-space">
-                        <input  type="submit" value="Enviar">
+                    <div class="col-12 col-md-3 ">
+                        <div class="input-space">
+                            <input  type="submit" value="Enviar">
+                        </div>
                     </div>
                 </div>
-            </div>
-        </form>
-    </div>
-
+            </form>
+        </div>
+     </div>
+    <script src="{% static 'sumtravel/js/get_restaurants.js' %}"></script>
 
 </body>
 </html>
