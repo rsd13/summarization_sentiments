@@ -1,0 +1,19 @@
+.nav-color{
+  background-color:rgb(113,149,120);
+
+
+}
+
+. navbar-dark a{
+  color: white;
+
+}
+
+p, label{
+   color: white;
+}
+
+.bg-custom{
+  background-color:#659DBD
+}
+

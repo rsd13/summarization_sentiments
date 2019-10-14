@@ -14,7 +14,6 @@ class Ciudad(models.Model):
     pais = models.ForeignKey(Pais, on_delete=models.CASCADE)
 
 
-
 class Local(models.Model):
     nombre = models.CharField(max_length=200)
     dirección = models.CharField(max_length=300)

@@ -24,7 +24,6 @@ def clean_words(col, nlp):
                 newText += token.lemma_.lower() + " "
 
     if newText != "":
-
         return newText
 
 

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Consigue tu restaurante</title>
+</head>
+ <!-- Links -->
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'sumtravel/css/bootstrap.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'sumtravel/css/style.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'sumtravel/css/get_restaurantes.css'%}">
+
+
+<body>
+     <!-- cabezera -->
+    <nav class="navbar-expand-sm bg-dark navbar-dark">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/sumtravel">SUMTRAVEL</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="container">
+        <form method="GET" action="find_restaurant/insert/">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-12 col-md-9">
+                    <label > Consigue un restaurante </label>
+                    <input type="text" class="form-control"  name="url"  placeholder="url del restaurante">
+                    <small  class="form-text text-muted">Introduce una url de restaurante de tripadvisor.</small>
+                </div>
+
+                <div class="col-12 col-md-3 ">
+                    <div class="input-space">
+                        <input  type="submit" value="Enviar">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+</body>
+</html>

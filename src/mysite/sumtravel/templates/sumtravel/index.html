@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hola que tal :)</title>
+</head>
+<body>
+
+{% if latest_question_list %}
+    <ul>
+    {% for pais in latest_question_list %}
+
+        <li><a href="/sumtravel/{{ pais.id }}/">{{ pais.nombre }}</a></li>
+
+
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
+
+</body>
+</html>

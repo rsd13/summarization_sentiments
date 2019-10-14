@@ -1,1 +1,2 @@
 python3 manage.py migrate #analiza la configuración de  INSTALLED_APPS  de y mysite/settings.py
+python3 manage.py createsuperuser #crea un superusuario
