@@ -12,22 +12,16 @@
 
 
 <body>
-     <!-- cabezera -->
-    <nav class="navbar-expand-sm bg-dark navbar-dark">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="/sumtravel">SUMTRAVEL</a>
-        </li>
-      </ul>
-    </nav>
+    {% include "./cabecera.html" %}
+
     <div class="alert" alert={{ alert }}>
         <div class="container">
-            <form method="GET" action="find_restaurant/insert/">
+            <form method="GET" action="insert/">
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-12 col-md-9">
                         <label > Consigue un restaurante </label>
-                        <input type="text" class="form-control"  name="url"  placeholder="url del restaurante">
+                        <input type="text" class="form-control"  name="url"  placeholder="url del restaurante" required>
                         <small  class="form-text text-muted">Introduce una url de restaurante de tripadvisor.</small>
                     </div>
 
@@ -40,7 +34,7 @@
             </form>
         </div>
      </div>
-    <script src="{% static 'sumtravel/js/get_restaurants.js' %}"></script>
+
 
 </body>
 </html>
