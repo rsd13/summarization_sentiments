@@ -40,6 +40,8 @@
            </div>
         </div>
 
+
+
         <div class="row" >
             <div class="col-12 col-sm-12 col-md-6" id=nombre_positivos>
                 <h5> Sustantivo positivos</h5>
@@ -58,7 +60,7 @@
                 </div>
 
                 <div class="collapse" id="wordcloud_noun_pos" data-parent="#nombre_positivos">
-                     <img src="/static/sumtravel/img/worcloud/{{restaurante.dirección}}posnoun.png">
+                     <img src="/static/sumtravel/img/worcloud/{{restaurante.id}}posnoun.png">
                 </div>
             </div>
 
@@ -79,13 +81,55 @@
                 </div>
 
                 <div class="collapse" id="wordcloud_adj_pos" data-parent="#adjetivos_positivos">
-                    <img src="/static/sumtravel/img/worcloud/{{restaurante.dirección}}posadj.png">
-
+                    <img src="/static/sumtravel/img/worcloud/{{restaurante.id}}posadj.png">
                 </div>
-
-
             </div>
         </div>
+
+         <div class="row" >
+            <div class="col-12 col-sm-12 col-md-6" id=nombre_negativos>
+                <h5> Sustantivo negativos</h5>
+                <p>
+                    <a  data-toggle="collapse" href="#freq_noun_neg" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        Gráfica
+                    </a>
+                      <a data-toggle="collapse" href="#wordcloud_noun_neg" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        Nube de palabras
+                    </a>
+                </p>
+                <div class="collapse" id="freq_noun_neg" data-parent="#nombre_negativos">
+                     <figure>
+                        <canvas id="q4" height="212" width="320" class="chartjs-render-monitor" style="display: block; height: 106px; width: 160px;"></canvas>
+                    </figure>
+                </div>
+
+                <div class="collapse" id="wordcloud_noun_neg" data-parent="#nombre_negativos">
+                     <img src="/static/sumtravel/img/worcloud/{{restaurante.id}}negnoun.png">
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-12 col-md-6" id=adjetivos_negativos>
+                <h5> Adjetivos negativos</h5>
+                <p>
+                    <a  data-toggle="collapse" href="#freq_adj_neg" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        Gráfica
+                    </a>
+                    <a data-toggle="collapse" href="#wordcloud_adj_neg" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        Nube de palabras
+                    </a>
+                </p>
+                <div class="collapse" id="freq_adj_neg" data-parent="#adjetivos_negativos">
+                     <figure>
+                        <canvas id="q5" height="212" width="320" class="chartjs-render-monitor" style="display: block; height: 106px; width: 160px;"></canvas>
+                    </figure>
+                </div>
+
+                <div class="collapse" id="wordcloud_adj_neg" data-parent="#adjetivos_negativos">
+                    <img src="/static/sumtravel/img/worcloud/{{restaurante.id}}negadj.png">
+                </div>
+            </div>
+        </div>
+
     </div>
 
 

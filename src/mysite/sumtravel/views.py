@@ -24,8 +24,7 @@ def get_restaurant(request):
         nombre, ciudad = request.GET.get("nombre"), request.GET.get("ciudad")
         id_ciudad = Ciudad.objects.filter(nombre__contains=ciudad)[0].id
         local = Local.objects.filter(nombre__contains=nombre, ciudad_id=id_ciudad)
-        print("localees")
-        print(local)
+
 
         context = {
             "restaurantes": local
@@ -39,7 +38,7 @@ def restaurant(request, restaurante_id):
     reviews = Review.objects.filter(local_id=restaurante_id)
     local = Local.objects.filter(id=restaurante_id)
     #obtengo el texto resumido con la información de las gráficas
-    lst = get_sum(restaurante_id, NLP, local[0].dirección)
+    lst = get_sum(restaurante_id, NLP)
 
     anyos = [review.año for review in reviews]
 

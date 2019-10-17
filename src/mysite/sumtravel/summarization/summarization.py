@@ -45,7 +45,7 @@ def queery(cursor, id):
     return pd.DataFrame(lst)
 
 
-def get_sum(id,nlp, direccion):
+def get_sum(id,nlp):
     datos = queery(conn(), id)
     dic = {}
     frases_positivas = datos[datos.sentimiento == "P"]
@@ -54,8 +54,11 @@ def get_sum(id,nlp, direccion):
     dic["grafica_positiva"] = get_plot(frases_positivas)
     dic["grafica_negativa"] = get_plot(frases_negativas)
     dic["grafica_neutra"] = get_plot(frases_neutras)
-    direccion += "pos"
-    dic["conteo_noun_pos"], dic["conteo_ajd_pos"] = freq_word(frases_positivas, nlp, direccion)
+
+    id = str(id)
+    dic["conteo_noun_pos"], dic["conteo_ajd_pos"] = freq_word(frases_positivas, nlp, id, "pos")
+
+    dic["conteo_noun_neg"], dic["conteo_ajd_neg"] = freq_word(frases_negativas, nlp, id, "neg")
 
 
     return dic

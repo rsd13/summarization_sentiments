@@ -21,15 +21,18 @@ def get_plot(datos):
     return lst
 
 
-def word_cloud(corpus, name):
+def word_cloud(corpus, name, sentiment):
     dir_path = os.path.dirname(os.path.abspath(__file__)) +"/../static/sumtravel/img/worcloud/"
     dir_path += name + ".png"
-    print(dir_path)
-    wordcloud = WordCloud(max_font_size=50, max_words=100, background_color="white").generate(corpus)
+
+    if sentiment == "pos":
+        wordcloud = WordCloud(max_font_size=50, max_words=100, background_color="white").generate(corpus)
+    elif sentiment == "neg":
+        wordcloud = WordCloud(max_font_size=50, max_words=100, background_color="black").generate(corpus)
     wordcloud.to_file(dir_path)
 
 
-def freq_word(datos, nlp, direccion):
+def freq_word(datos, nlp, id, sentiment):
 
     """
     función que hace un conteo de palabras
@@ -72,8 +75,8 @@ def freq_word(datos, nlp, direccion):
         dic["frecuencia"] = frequency
         word_adj_top.append(dic)
 
-    name = direccion + "noun"
-    word_cloud(word_noun_str, name)
-    name = direccion + "adj"
-    word_cloud(word_noun_str, name)
+    name = id + sentiment + "noun"
+    word_cloud(word_noun_str, name, sentiment)
+    name = id + sentiment + "adj"
+    word_cloud(word_noun_str, name, sentiment)
     return (word_noun_top, word_adj_top)

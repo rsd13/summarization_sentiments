@@ -70,10 +70,49 @@ function freq_adj_pos() {
     })
 }
 
+function freq_noun_neg() {
+    grafico_pos = window.data.conteo_noun_neg
+    console.log(grafico_pos)
+    new Chart("q4", {
+        type: 'horizontalBar',
+        data: {
+            labels: grafico_pos.map(eachCharacter => eachCharacter.nombre),
+            datasets: [{
+                label: 'Sustantivos',
+                data: grafico_pos.map(eachCharacter => eachCharacter.frecuencia),
+                borderWidth: 1,
+                borderColor: 'rgba(0,50,250,.7)',
+                backgroundColor: 'rgba(255,101,80,0.4)'
+            }]
+        }
+    })
+}
+
+
+function freq_adj_neg() {
+    grafico_pos = window.data.conteo_ajd_neg
+
+    new Chart("q5", {
+        type: 'horizontalBar',
+        data: {
+            labels: grafico_pos.map(eachCharacter => eachCharacter.nombre),
+            datasets: [{
+                label: 'Adjetivos',
+                data: grafico_pos.map(eachCharacter => eachCharacter.frecuencia),
+                borderWidth: 1,
+                borderColor: 'rgba(0,50,250,.7)',
+                backgroundColor: 'rgba(255,101,80,0.4)'
+            }]
+        }
+    })
+}
+
 function insert_graficos(){
     historial()
     freq_noun_pos()
     freq_adj_pos()
+    freq_adj_neg()
+    freq_noun_neg()
 }
 
 insert_graficos()
