@@ -34,6 +34,40 @@ function historial(){
     })
 }
 
+function historial_mes(){
+    grafico_pos = window.data.grafica_positiva_mes
+    grafico_neg = window.data.grafica_negativa_mes
+    grafico_neu = window.data.grafica_neutra_mes
+
+    new Chart("q1mes", {
+        type: 'bar',
+        data: {
+            labels: grafico_pos.map(character => character.año),
+            datasets: [{
+                label: 'positivo',
+                data: grafico_pos.map(character => character.cantidad),
+                borderColor: 'rgba(0, 50, 250, .7)',
+                borderWidth: 1,
+                backgroundColor: 'rgba(0, 250, 50, .2)'
+            },{
+                label: 'negativo',
+                data: grafico_neg.map(character => character.cantidad),
+                borderColor: 'rgba(0, 50, 250, .7)',
+                borderWidth: 1,
+                backgroundColor: 'rgba(255,101,80,0.4)'
+            },{
+                label: 'neutro',
+                data: grafico_neu.map(character => character.cantidad),
+                borderColor: 'rgba(0, 50, 250, .7)',
+                borderWidth: 1,
+                backgroundColor: 'rgba(191,191,191,0.4)'
+            }
+
+            ]
+        }
+    })
+}
+
 function freq_noun_pos() {
     grafico_pos = window.data.conteo_noun_pos
     console.log(grafico_pos)
@@ -155,6 +189,7 @@ function insert_graficos(){
     freq_adj_neg()
     freq_noun_neg()
     comparative()
+    historial_mes()
 }
 
 insert_graficos()

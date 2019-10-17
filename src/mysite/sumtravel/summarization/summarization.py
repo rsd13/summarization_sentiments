@@ -2,7 +2,7 @@ import os
 import sqlite3
 from joblib import load
 import pandas as pd
-from .graficas import get_plot, freq_word
+from .graficas import get_plot, freq_word, get_plot_mes
 
 
 
@@ -54,6 +54,10 @@ def get_sum(id,nlp):
     dic["grafica_positiva"] = get_plot(frases_positivas)
     dic["grafica_negativa"] = get_plot(frases_negativas)
     dic["grafica_neutra"] = get_plot(frases_neutras)
+
+    dic["grafica_positiva_mes"] = get_plot_mes(frases_positivas)
+    dic["grafica_negativa_mes"] = get_plot_mes(frases_negativas)
+    dic["grafica_neutra_mes"] = get_plot_mes(frases_neutras)
 
     id = str(id)
     dic["conteo_noun_pos"], dic["conteo_ajd_pos"] = freq_word(frases_positivas, nlp, id, "pos")
