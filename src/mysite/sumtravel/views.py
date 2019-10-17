@@ -40,8 +40,8 @@ def restaurant(request, restaurante_id):
     #obtengo el texto resumido con la información de las gráficas
     lst = get_sum(restaurante_id, NLP)
 
-    anyos = [review.año for review in reviews]
-
+    anyos = set([review.año for review in reviews])
+    anyos = sorted(anyos, reverse=True)
     context = {
         "reviews": reviews,
         "restaurante": local[0],
