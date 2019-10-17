@@ -11,7 +11,7 @@
 
 </head>
 <body>
-
+ {{grafica_positiva}}
 {% include "./cabecera.html" %}
 
 <div class="container">
@@ -23,6 +23,7 @@
     </div>
     <form method="GET" action="get_restaurants/" >
         <div class="row">
+
             <div class="col-12 col-md-5">
                 <input type="text"  name="nombre"  class="form-control" placeholder="Nombre" required>
                 <small  class="form-text text-muted">Introduce un nombre de restaurante.</small>
@@ -38,6 +39,8 @@
             </div>
         </div>
     </form>
+
+
 
 </div>
 <script src="{% static 'sumtravel/js/index.js' %}"></script>

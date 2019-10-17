@@ -44,6 +44,9 @@ class Restaurante(Local):
         """
         función que crea el driver de Selenium para la conexión a una url
         """
+        basicImg =  self.driver.find_element_by_css_selector("img[class='basicImg']")
+
+        self.foto = basicImg.get_attribute("data-lazyurl")
         name_restaurant = self.driver.find_element_by_css_selector("h1[class='header heading masthead masthead_h1 ']")
         name_restaurant, place_restaurant = name_restaurant.text.split(",")
         pais = self.driver.find_element_by_css_selector("span[class='country-name']").text
@@ -95,7 +98,7 @@ class Restaurante(Local):
                     print("Error, al dar click al comentario")
                     pass
 
-                time.sleep(1)
+                time.sleep(1.5)
                 html = self.driver.page_source
                 self.get_reviews(html)
 

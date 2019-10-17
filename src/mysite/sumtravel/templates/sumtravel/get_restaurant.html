@@ -3,8 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'sumtravel/css/bootstrap.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sumtravel/css/style.css'%}">
+
 </head>
+
 <body>
+{% include "./cabecera.html" %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+           <h3> Restaurantes </h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+
+            <table class="table table-hover table-bordered">
+
+              <!--Table head-->
+              <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Dirección</th>
+                    <th>Link</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {% for restaurante in restaurantes %}
+                    <tr>
+                        <td> {{restaurante.nombre}}</td>
+                        <td> {{restaurante.dirección}}</td>
+                        <td>
+                            <a href="/sumtravel/get_restaurants/{{restaurante.id}}">
+                                Link
+                            </a>
+                        </td>
+                    </tr>
+                {%endfor%}
+              </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

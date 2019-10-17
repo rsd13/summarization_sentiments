@@ -3,8 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'sumtravel/css/restaurant.css'%}">
+        <link rel="stylesheet" type="text/css" href="{% static 'sumtravel/css/style.css'%}">
+
 </head>
+
 <body>
-    Info del restaurante :)
+
+{% include "./cabecera.html" %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-6">
+                <img class="img-restaurant " src="{{restaurante.img}}">
+                <h4>Restaurante {{restaurante.nombre}}</h4>
+                <strong>Dirección: </strong> {{restaurante.dirección}}
+
+                <div class="form-group">
+                <label for="exampleFormControlSelect1">Filtrar reviews por años</label>
+                <select class="form-control" id="exampleFormControlSelect1">
+                    {%for año in años%}
+                      <option>{{año}}</option>
+                    {%endfor%}
+                </select>
+              </div>
+           </div>
+           <div class="col-12 col-sm-12 col-md-6">
+                <h5 class="text-center"> Sentimientos de reviews </h5>
+                <figure>
+                    <canvas id="q1" height="212" width="320" class="chartjs-render-monitor" style="display: block; height: 106px; width: 160px;"></canvas>
+                </figure>
+           </div>
+        </div>
+
+        <div class="row" >
+            <div class="col-12 col-sm-12 col-md-6" id=nombre_positivos>
+                <h5> Sustantivo positivos</h5>
+                <p>
+                    <a  data-toggle="collapse" href="#freq_noun_pos" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        Gráfica
+                    </a>
+                      <a data-toggle="collapse" href="#wordcloud_noun_pos" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        Nube de palabras
+                    </a>
+                </p>
+                <div class="collapse" id="freq_noun_pos" data-parent="#nombre_positivos">
+                     <figure>
+                        <canvas id="q2" height="212" width="320" class="chartjs-render-monitor" style="display: block; height: 106px; width: 160px;"></canvas>
+                    </figure>
+                </div>
+
+                <div class="collapse" id="wordcloud_noun_pos" data-parent="#nombre_positivos">
+                     <img src="/static/sumtravel/img/worcloud/{{restaurante.dirección}}posnoun.png">
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-12 col-md-6" id=adjetivos_positivos>
+                <h5> Adjetivos positivos</h5>
+                <p>
+                    <a  data-toggle="collapse" href="#freq_adj_pos" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        Gráfica
+                    </a>
+                    <a data-toggle="collapse" href="#wordcloud_adj_pos" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        Nube de palabras
+                    </a>
+                </p>
+                <div class="collapse" id="freq_adj_pos" data-parent="#adjetivos_positivos">
+                    <figure>
+                        <canvas id="q3" height="212" width="320" class="chartjs-render-monitor" style="display: block; height: 106px; width: 160px;"></canvas>
+                    </figure>
+                </div>
+
+                <div class="collapse" id="wordcloud_adj_pos" data-parent="#adjetivos_positivos">
+                    <img src="/static/sumtravel/img/worcloud/{{restaurante.dirección}}posadj.png">
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+<script>
+window.data = {{grafica_positiva|safe}};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+<script src="{% static 'sumtravel/js/restaurant.js' %}"></script>
+
+
+
 </body>
 </html>

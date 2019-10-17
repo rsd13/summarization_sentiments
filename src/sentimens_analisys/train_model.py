@@ -6,8 +6,12 @@ from sklearn.pipeline import Pipeline
 from sklearn import metrics
 from sklearn.linear_model import SGDClassifier
 from sklearn.model_selection import KFold
-from sklearn.svm import SVC
 from joblib import dump, load
+from sklearn.svm import SVC
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.svm import LinearSVC
+from sklearn.linear_model import LogisticRegression
+
 
 def evaluacion(y_true, y_pred):
     recall = metrics.recall_score(y_true, y_pred, average='macro')
@@ -24,7 +28,7 @@ def SVMCross(X, y):
     text_clf = Pipeline([
         ('vect', CountVectorizer()),
         ('tfidf', TfidfTransformer()),
-        ('SGDClassifier', SGDClassifier()),
+        ('SGDClassifier',LinearSVC())
     ])
 
     scores = []
@@ -66,6 +70,8 @@ def open_dataset():
 def train_model():
     data = open_dataset()
     X = data.frase
+    X.fillna("0",inplace=True)
+
     y = data.emocion
     clf = SVMCross(X.values, y.values)
 

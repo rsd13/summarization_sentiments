@@ -14,7 +14,7 @@ def check_local(nombre, direccion, ciudad_id):
 
     return local[0].id if len(local) > 0 else None
 
-def insert_local(nombre, direccion, ciudad_id):
+def insert_local(nombre, direccion, ciudad_id, foto):
     """
     inserta un local en la base de datos
     :param nombre: nombre del local
@@ -28,7 +28,7 @@ def insert_local(nombre, direccion, ciudad_id):
     #si no existe, se inseerta
     if id == None:
         local = Local.objects.create(nombre=nombre, dirección=direccion,
-                                    tipo="restaurante", ciudad_id=ciudad_id)
+                                    tipo="restaurante",img=foto, ciudad_id=ciudad_id)
         local.save()
         return local.id
 

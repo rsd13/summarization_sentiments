@@ -8,6 +8,7 @@ class Local:
         self.ciudad = None
         self.direccion = None
         self.reviews = []
+        self.foto = None
         self.driver = driver=webdriver.Firefox()
 
     def print_info_basic(self):

@@ -3,6 +3,22 @@ import pandas as pd
 import spacy
 
 
+def clean_acentos(word):
+    """
+    función que limpia los acentos
+    :param word:
+    :return:
+    """
+    replacements = (
+        ("á", "a"),
+        ("é", "e"),
+        ("í", "i"),
+        ("ó", "o"),
+        ("ú", "u"),
+    )
+    for a, b in replacements:
+        word = word.replace(a, b).replace(a.upper(), b.upper())
+    return word
 
 def clean_words(col, nlp):
     """
@@ -11,7 +27,6 @@ def clean_words(col, nlp):
     :param col: constructor en españoñ de Spacy
     :return: frase limpiada
     """
-
     doc = nlp(col)
     newText = ""
     for token in doc:
@@ -21,13 +36,11 @@ def clean_words(col, nlp):
         if "@" not in text and  "http" not in text and "#" not in text:
             if token.pos_ == "NOUN" or token.pos_ == "VERB" or \
                     token.pos_ == "ADJ" or token.pos_ == "ADV":
-                newText += token.lemma_.lower() + " "
+
+                newText += clean_acentos(token.lemma_.lower()) + " "
 
     if newText != "":
         return newText
-
-
-
 
 
 def clean_emocion(col):
