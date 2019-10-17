@@ -10,6 +10,8 @@ from .bbdd.local import insert_local
 from .bbdd.reviews import insert_review
 from .summarization.summarization import get_sum
 import spacy
+from .summarization.summarization_filter import get_sum_filter
+
 
 NLP = spacy.load('es_core_news_sm')
 
@@ -87,3 +89,21 @@ def insert_restaurant_database(request):
         }
         return render(request, 'sumtravel/insert.html', context)
 
+
+def restaurant_filter(request, restaurante_id):
+    año = request.GET.get("año")
+    reviews = Review.objects.filter(local_id=restaurante_id)
+    local = Local.objects.filter(id=restaurante_id)
+    # obtengo el texto resumido con la información de las gráficas
+    lst = get_sum_filter(restaurante_id, NLP, año)
+
+    anyos = set([review.año for review in reviews])
+    anyos = sorted(anyos, reverse=True)
+    context = {
+        "reviews": reviews,
+        "restaurante": local[0],
+        "grafica_positiva": lst,
+        "años": set(anyos)
+    }
+
+    return render(request, 'sumtravel/restaurant_filter.html', context)

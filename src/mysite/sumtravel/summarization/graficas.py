@@ -8,16 +8,46 @@ def get_plot(datos):
     función que da información sobre cuantos reviews positivas, negativas y neutras da
     :param datos: frases positivas, negativas o neutras a contar
     """
-    positivas_años = datos.groupby('año').agg(['count'])
+    """positivas_años = datos.groupby('año').agg(['count'])
     group = positivas_años.to_dict('sentimiento')
-    group = group[('frase', 'count')]
-
+    group = group[('frase', 'count')]"""
+    group = datos.año.value_counts().sort_index()
     lst = []
     for k, v in group.items():
         dic = {}
         dic["año"],dic["cantidad"] = k,v
         lst.append(dic)
 
+    return lst
+
+
+def get_plot_filter(datos):
+    mes_name = {
+        1: "Enero",
+        2: "Febrero",
+        3: "Marzo",
+        4: "Abril",
+        5: "Mayo",
+        6: "Junio",
+        7: "Julio",
+        8: "Agosto",
+        9: "Septiembre",
+        10: "Octubre",
+        11: "Noviembre",
+        12: "Diciembre",
+
+
+    }
+    group = datos.mes.value_counts().sort_index()
+
+    lst = []
+    for k, v in group.items():
+        dic = {}
+        dic["año"],dic["cantidad"] = mes_name[k],v
+        lst.append(dic)
+
+    print("LISTAAAAAAAA ")
+    print(lst)
     return lst
 
 

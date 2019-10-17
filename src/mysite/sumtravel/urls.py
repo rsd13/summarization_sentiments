@@ -10,5 +10,6 @@ urlpatterns = [
     path('insert_restaurant/insert/', views.insert_restaurant_database, name='insert'),
     path("get_restaurants/", views.get_restaurant, name=''),
     path("get_restaurants/<int:restaurante_id>", views.restaurant, name=''),
+    path("get_restaurants/filter/<int:restaurante_id>", views.restaurant_filter, name=''),
 
 ]
