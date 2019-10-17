@@ -22,6 +22,9 @@ def get_plot(datos):
 
 
 def get_plot_filter(datos):
+    """
+    filtra por año
+    """
     mes_name = {
         1: "Enero",
         2: "Febrero",
@@ -46,8 +49,33 @@ def get_plot_filter(datos):
         dic["año"],dic["cantidad"] = mes_name[k],v
         lst.append(dic)
 
-    print("LISTAAAAAAAA ")
-    print(lst)
+    return lst
+
+def get_plot_filter_mes_year(datos):
+    mes_name = {
+        1: "Enero",
+        2: "Febrero",
+        3: "Marzo",
+        4: "Abril",
+        5: "Mayo",
+        6: "Junio",
+        7: "Julio",
+        8: "Agosto",
+        9: "Septiembre",
+        10: "Octubre",
+        11: "Noviembre",
+        12: "Diciembre",
+
+
+    }
+    group = datos.mes.value_counts()
+
+    lst = []
+    for k, v in group.items():
+        dic = {}
+        dic["año"],dic["cantidad"] = mes_name[k],v
+        lst.append(dic)
+
     return lst
 
 
@@ -71,42 +99,44 @@ def freq_word(datos, nlp, id, sentiment):
     """
 
     fdist = datos.frase.tolist()
-    suma = reduce(lambda a, x: a + x, fdist)
-    doc = nlp(suma)
+    if fdist != []:
+        suma = reduce(lambda a, x: a + x, fdist)
+        doc = nlp(suma)
 
-    word_noun_str, word_adj_str  = "", ""
-    word_noun, word_adj = [], []
-    for token in doc:
-        # me quedo con las keywords, eliminando las demas palabras que perteenecen a todas las frases
-        # y dan ruido a la hora de entrenar
-        if token.pos_ == "NOUN":
-            word_noun.append(token.lemma_)
-            word_noun_str += token.lemma_ + " "
-        elif token.pos_ == "ADJ":
-            word_adj.append(token.lemma_)
-            word_adj_str += token.lemma_ + " "
+        word_noun_str, word_adj_str  = "", ""
+        word_noun, word_adj = [], []
+        for token in doc:
+            # me quedo con las keywords, eliminando las demas palabras que perteenecen a todas las frases
+            # y dan ruido a la hora de entrenar
+            if token.pos_ == "NOUN":
+                word_noun.append(token.lemma_)
+                word_noun_str += token.lemma_ + " "
+            elif token.pos_ == "ADJ":
+                word_adj.append(token.lemma_)
+                word_adj_str += token.lemma_ + " "
 
-    word_noun_top = []
-    word_adj_top = []
-    word_noun = FreqDist(word_noun)
+        word_noun_top = []
+        word_adj_top = []
+        word_noun = FreqDist(word_noun)
 
-    #obtengo los nombres
-    for word, frequency in word_noun.most_common(20):
-        dic = {}
-        dic["nombre"] = word
-        dic["frecuencia"] = frequency
-        word_noun_top.append(dic)
+        #obtengo los nombres
+        for word, frequency in word_noun.most_common(20):
+            dic = {}
+            dic["nombre"] = word
+            dic["frecuencia"] = frequency
+            word_noun_top.append(dic)
 
-    word_adj = FreqDist(word_adj)
-    # obtengo los adjetivos
-    for word, frequency in word_adj.most_common(20):
-        dic = {}
-        dic["nombre"] = word
-        dic["frecuencia"] = frequency
-        word_adj_top.append(dic)
+        word_adj = FreqDist(word_adj)
+        # obtengo los adjetivos
+        for word, frequency in word_adj.most_common(20):
+            dic = {}
+            dic["nombre"] = word
+            dic["frecuencia"] = frequency
+            word_adj_top.append(dic)
 
-    name = id + sentiment + "noun"
-    word_cloud(word_noun_str, name, sentiment)
-    name = id + sentiment + "adj"
-    word_cloud(word_noun_str, name, sentiment)
-    return (word_noun_top, word_adj_top)
+        name = id + sentiment + "noun"
+        word_cloud(word_noun_str, name, sentiment)
+        name = id + sentiment + "adj"
+        word_cloud(word_noun_str, name, sentiment)
+        return (word_noun_top, word_adj_top)
+    return

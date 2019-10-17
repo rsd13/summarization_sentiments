@@ -11,5 +11,8 @@ urlpatterns = [
     path("get_restaurants/", views.get_restaurant, name=''),
     path("get_restaurants/<int:restaurante_id>", views.restaurant, name=''),
     path("get_restaurants/filter/<int:restaurante_id>", views.restaurant_filter, name=''),
+    path("get_restaurants/filter_year_mes/<int:restaurante_id>/<int:año>", views.restaurant_filter_year_mes, name=''),
+
+
 
 ]

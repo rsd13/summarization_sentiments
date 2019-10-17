@@ -11,6 +11,7 @@ from .bbdd.reviews import insert_review
 from .summarization.summarization import get_sum
 import spacy
 from .summarization.summarization_filter import get_sum_filter
+from .summarization.summarization_filter_mes_year import get_sum_filter_mes_year
 
 
 NLP = spacy.load('es_core_news_sm')
@@ -91,19 +92,62 @@ def insert_restaurant_database(request):
 
 
 def restaurant_filter(request, restaurante_id):
+    """
+    función que fitra por año
+    """
     año = request.GET.get("año")
     reviews = Review.objects.filter(local_id=restaurante_id)
     local = Local.objects.filter(id=restaurante_id)
     # obtengo el texto resumido con la información de las gráficas
     lst = get_sum_filter(restaurante_id, NLP, año)
 
-    anyos = set([review.año for review in reviews])
-    anyos = sorted(anyos, reverse=True)
+
+
     context = {
         "reviews": reviews,
         "restaurante": local[0],
         "grafica_positiva": lst,
-        "años": set(anyos)
+        "año": año
     }
 
     return render(request, 'sumtravel/restaurant_filter.html', context)
+
+
+def restaurant_filter_year_mes(request, restaurante_id, año):
+    """
+    función que fitra por año y mes
+    """
+
+    mes_name = {
+        1: "Enero",
+        2: "Febrero",
+        3: "Marzo",
+        4: "Abril",
+        5: "Mayo",
+        6: "Junio",
+        7: "Julio",
+        8: "Agosto",
+        9: "Septiembre",
+        10: "Octubre",
+        11: "Noviembre",
+        12: "Diciembre",
+
+    }
+
+    mes = request.GET.get("mes")
+    reviews = Review.objects.filter(local_id=restaurante_id)
+    local = Local.objects.filter(id=restaurante_id)
+    # obtengo el texto resumido con la información de las gráficas
+    lst = get_sum_filter_mes_year(restaurante_id, NLP, año, mes)
+    mes = mes_name[int(mes)]
+    context = {
+        "reviews": reviews,
+        "restaurante": local[0],
+        "grafica_positiva": lst,
+        "año": año,
+        "mes": mes
+    }
+
+    print(mes)
+
+    return render(request, 'sumtravel/restaurant_filter_year_mes.html',context)
