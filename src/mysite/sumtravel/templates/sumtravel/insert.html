@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Insert</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'sumtravel/css/bootstrap.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sumtravel/css/style.css'%}">
+
+</head>
+
+<body>
+
+
+    {% include "./cabecera.html" %}
+    {% if alert == False %}
+        Restaurante insertado correctamente!💃🏼💃🏼💃🏼
+    {% else %}
+        Error a insertar. Introduce una url de restaurantes valida de tripadvisor.
+    {% endif %}
+
+    <a href="/sumtravel/insert_restaurant/">Volver</a>
+
+
+</body>
+</html>

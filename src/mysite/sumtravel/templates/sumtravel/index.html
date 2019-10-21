@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SUMTRAVEL</title>
+
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'sumtravel/css/bootstrap.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sumtravel/css/style.css'%}">
+
+</head>
+<body>
+ {{grafica_positiva}}
+{% include "./cabecera.html" %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 title-index">
+            <h1>SUMTRAVEL </h1>
+
+        </div>
+    </div>
+    <form method="GET" action="get_restaurants/" >
+        <div class="row">
+
+            <div class="col-12 col-md-5">
+                <input type="text"  name="nombre"  class="form-control" placeholder="Nombre" required>
+                <small  class="form-text text-muted">Introduce un nombre de restaurante.</small>
+            </div>
+
+            <div class="col-12 col-md-5">
+                <input type="text"  name="ciudad" class="form-control"  placeholder="Ciudad" required>
+                <small  class="form-text text-muted">Introduce la ciudad del restaurante.</small>
+            </div>
+
+            <div class="col-12 col-md-2 ">
+                <input  type="submit" value="Enviar">
+            </div>
+        </div>
+    </form>
+
+
+
+</div>
+<script src="{% static 'sumtravel/js/index.js' %}"></script>
+</body>
+</html>
