@@ -29,17 +29,16 @@ def queery(cursor, id):
 
                     """, (id,))
     rows = cursor.fetchall()
-    dir_path = os.path.dirname(os.path.abspath(__file__)) + "/filename.joblib"
-    clf = load(dir_path)
+
 
     lst = []
     for row in rows:
         dic = {}
         text = row[1]
         dic["frase"] = text
-        dic["mes"] = row[2]
-        dic["año"] = row[3]
-        dic["sentimiento"] = clf.predict([text])[0]
+        dic["mes"] = row[3]
+        dic["año"] = row[4]
+        dic["sentimiento"] = row[2]
         lst.append(dic)
 
     return pd.DataFrame(lst)

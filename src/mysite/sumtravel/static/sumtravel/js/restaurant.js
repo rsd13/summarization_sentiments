@@ -145,41 +145,74 @@ function comparative(){
     grafico_pos = window.data.grafica_positiva
     grafico_neg = window.data.grafica_negativa
     grafico_neu = window.data.grafica_neutra
-    console.log(grafico_pos)
 
-    new Chart("q12", {
+
+    if(grafico_pos.length > 0 && grafico_neg.length > 0 && grafico_neu.length > 0){
+        new Chart("q12", {
         type: 'doughnut',
-        data: {
-            labels: ['Positivo', 'Negativo', "Neutro"],
-            datasets: [{
-                label: 'Gender rate',
-                data: [
-                    grafico_pos[0].cantidad,
-                    grafico_neg[0].cantidad,
-                    grafico_neu[0].cantidad,
-                ],
-                borderColor: [
-                    'rgba(0, 250, 50, .2)',
-                    'rgba(0, 250, 50, .2)',
-                    'rgba(0, 250, 50, .2)',
-                ],
-                borderWidth: 1,
-                backgroundColor: [
-
-                     'rgba(0, 250, 50, .2)',
-                    'rgba(255,101,80,0.4)',
-                    'rgba(191,191,191,0.4)'
-                ]
-
-
-            }]
-        },
-        options: {
-            legend: {
-                position: 'left'
+            data: {
+                labels: ['Positivo', 'Negativo', "Neutro"],
+                datasets: [{
+                    label: 'Gender rate',
+                    data: [
+                        grafico_pos[0].cantidad,
+                        grafico_neg[0].cantidad,
+                        grafico_neu[0].cantidad,
+                    ],
+                    borderColor: [
+                        'rgba(0, 250, 50, .2)',
+                        'rgba(0, 250, 50, .2)',
+                        'rgba(0, 250, 50, .2)',
+                    ],
+                    borderWidth: 1,
+                    backgroundColor: [
+                        'rgba(0, 250, 50, .2)',
+                        'rgba(255,101,80,0.4)',
+                        'rgba(191,191,191,0.4)'
+                    ]
+                }]
+            },
+            options: {
+                legend: {
+                    position: 'left'
+                }
             }
-        }
-    })
+        })
+    }else if(grafico_pos.length > 0 && grafico_neg.length > 0 && grafico_neu.length == 0){
+        console.log("dfgdfgdgdgdgdfg")
+        new Chart("q12", {
+        type: 'doughnut',
+            data: {
+                labels: ['Positivo', 'Negativo'],
+                datasets: [{
+                    label: 'Gender rate',
+                    data: [
+                        grafico_pos[0].cantidad,
+                        grafico_neg[0].cantidad
+                    ],
+                    borderColor: [
+                        'rgba(0, 250, 50, .2)',
+                        'rgba(0, 250, 50, .2)',
+
+                    ],
+                    borderWidth: 1,
+                    backgroundColor: [
+                        'rgba(0, 250, 50, .2)',
+                        'rgba(255,101,80,0.4)',
+
+                    ]
+                }]
+            },
+            options: {
+                legend: {
+                    position: 'left'
+                }
+            }
+        })
+    }
+
+
+
 }
 
 function insert_graficos(){

@@ -1,4 +1,6 @@
 from ..models import Review
+import os
+from joblib import load
 
 
 def check_review(comentario, mes, anyo, local_id):
@@ -25,8 +27,12 @@ def insert_review(comentario, mes, anyo, local_id):
     #si no existe el nombre del pais se inseerta
     id = check_review(comentario, mes, anyo, local_id)
     #si no existe, se inseerta
+    dir_path = os.path.dirname(os.path.abspath(__file__)) + "/filename.joblib"
+    clf = load(dir_path)
     if id == None:
-        review =  Review.objects.create(comentario=comentario, mes=mes, año=anyo, local_id=local_id)
+        sentimiento = clf.predict([comentario])[0]
+        review =  Review.objects.create(comentario=comentario, mes=mes, año=anyo, local_id=local_id,
+                                        sentimiento=sentimiento)
         review.save()
 
 

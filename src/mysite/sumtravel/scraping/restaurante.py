@@ -50,9 +50,9 @@ class Restaurante(Local):
         name_restaurant = self.driver.find_element_by_css_selector("h1[class='header heading masthead masthead_h1 ']")
         name_restaurant, place_restaurant = name_restaurant.text.split(",")
         pais = self.driver.find_element_by_css_selector("span[class='country-name']").text
-        direccion =self.driver.find_element_by_css_selector("span[class='street-address']").text
+        direccion =self.driver.find_element_by_css_selector("span[class='street-address']").text +", "
         direccion += self.driver.find_element_by_css_selector("span[class='locality']").text
-
+        print(direccion)
         self.nombre, self.ciudad = name_restaurant, place_restaurant[1:]
         self.pais, self.direccion = pais, direccion[:-1]
         self.print_info_basic()
