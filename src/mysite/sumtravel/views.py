@@ -2,22 +2,18 @@ from django.shortcuts import render
 from .models import Ciudad
 from .models import Local
 from .models import Review
-from .models import Pais
 from .scraping.get_restaurantes import save_restaurantes
 from .bbdd.pais import insert_Pais
 from .bbdd.ciudad import insert_ciudad
 from .bbdd.local import insert_local
 from .bbdd.reviews import insert_review
 from .summarization.summarization import get_sum
-import spacy
 from .summarization.summarization_filter import get_sum_filter
 from .summarization.summarization_filter_mes_year import get_sum_filter_mes_year
-
-
-NLP = spacy.load('es_core_news_sm')
+from django.conf import settings
+NLP = settings.NLP
 
 def index(request):
-
     return render(request, 'sumtravel/index.html')
 
 
@@ -38,20 +34,24 @@ def get_restaurant(request):
         return render(request, 'sumtravel/get_restaurant.html', context)
 
 def restaurant(request, restaurante_id):
-    reviews = Review.objects.filter(local_id=restaurante_id)
-    local = Local.objects.filter(id=restaurante_id)
-    #obtengo el texto resumido con la información de las gráficas
-    lst = get_sum(restaurante_id, NLP)
 
-    anyos = set([review.año for review in reviews])
-    anyos = sorted(anyos, reverse=True)
-    context = {
-        "reviews": reviews,
-        "restaurante": local[0],
-        "grafica_positiva": lst,
-        "años": set(anyos)
-    }
-    return render(request, 'sumtravel/restaurant.html',context)
+    try:
+        reviews = Review.objects.filter(local_id=restaurante_id)
+        local = Local.objects.filter(id=restaurante_id)
+        #obtengo el texto resumido con la información de las gráficas
+        lst = get_sum(restaurante_id, settings.NLP)
+
+        anyos = set([review.año for review in reviews])
+        anyos = sorted(anyos, reverse=True)
+        context = {
+            "reviews": reviews,
+            "restaurante": local[0],
+            "grafica_positiva": lst,
+            "años": set(anyos)
+        }
+        return render(request, 'sumtravel/restaurant.html', context)
+    except:
+        return render(request, 'sumtravel/404.html', context)
 
 def insert_restaurant(request):
     return render(request, 'sumtravel/insert_restaurant.html')
@@ -59,6 +59,9 @@ def insert_restaurant(request):
 #insereta los restaurantes
 def insert_restaurant_database(request):
 
+    """
+    inserta los restaurantes desde el web scraping. Además los clasifica en positivo, neutro o negativo
+    """
     try:
         #obtengo la información de los restaurantes
 
@@ -95,59 +98,62 @@ def restaurant_filter(request, restaurante_id):
     """
     función que fitra por año
     """
-    año = request.GET.get("año")
-    reviews = Review.objects.filter(local_id=restaurante_id)
-    local = Local.objects.filter(id=restaurante_id)
-    # obtengo el texto resumido con la información de las gráficas
-    lst = get_sum_filter(restaurante_id, NLP, año)
+    try:
+        año = request.GET.get("año")
+        reviews = Review.objects.filter(local_id=restaurante_id)
+        local = Local.objects.filter(id=restaurante_id)
+        # obtengo el texto resumido con la información de las gráficas
+        lst = get_sum_filter(restaurante_id, settings.NLP , año)
 
+        context = {
+            "reviews": reviews,
+            "restaurante": local[0],
+            "grafica_positiva": lst,
+            "año": año
+        }
 
-
-    context = {
-        "reviews": reviews,
-        "restaurante": local[0],
-        "grafica_positiva": lst,
-        "año": año
-    }
-
-    return render(request, 'sumtravel/restaurant_filter.html', context)
+        return render(request, 'sumtravel/restaurant_filter.html', context)
+    except:
+        return render(request, 'sumtravel/404.html')
 
 
 def restaurant_filter_year_mes(request, restaurante_id, año):
     """
     función que fitra por año y mes
     """
+    try:
+        mes_name = {
+            1: "Enero",
+            2: "Febrero",
+            3: "Marzo",
+            4: "Abril",
+            5: "Mayo",
+            6: "Junio",
+            7: "Julio",
+            8: "Agosto",
+            9: "Septiembre",
+            10: "Octubre",
+            11: "Noviembre",
+            12: "Diciembre",
 
-    mes_name = {
-        1: "Enero",
-        2: "Febrero",
-        3: "Marzo",
-        4: "Abril",
-        5: "Mayo",
-        6: "Junio",
-        7: "Julio",
-        8: "Agosto",
-        9: "Septiembre",
-        10: "Octubre",
-        11: "Noviembre",
-        12: "Diciembre",
+        }
 
-    }
+        mes = request.GET.get("mes")
+        reviews = Review.objects.filter(local_id=restaurante_id)
+        local = Local.objects.filter(id=restaurante_id)
+        # obtengo el texto resumido con la información de las gráficas
+        lst = get_sum_filter_mes_year(restaurante_id, settings.NLP, año, mes)
+        mes = mes_name[int(mes)]
+        context = {
+            "reviews": reviews,
+            "restaurante": local[0],
+            "grafica_positiva": lst,
+            "año": año,
+            "mes": mes
+        }
 
-    mes = request.GET.get("mes")
-    reviews = Review.objects.filter(local_id=restaurante_id)
-    local = Local.objects.filter(id=restaurante_id)
-    # obtengo el texto resumido con la información de las gráficas
-    lst = get_sum_filter_mes_year(restaurante_id, NLP, año, mes)
-    mes = mes_name[int(mes)]
-    context = {
-        "reviews": reviews,
-        "restaurante": local[0],
-        "grafica_positiva": lst,
-        "año": año,
-        "mes": mes
-    }
+        print(mes)
 
-    print(mes)
-
-    return render(request, 'sumtravel/restaurant_filter_year_mes.html',context)
+        return render(request, 'sumtravel/restaurant_filter_year_mes.html',context)
+    except:
+        return render(request, 'sumtravel/404.html')

@@ -24,6 +24,7 @@ class Local(models.Model):
 
 class Review(models.Model):
     comentario = models.CharField(max_length=5000)
+    sentimiento = models.CharField(max_length=20)
     mes = models.IntegerField()
     año = models.IntegerField()
     local = models.ForeignKey(Local, on_delete=models.CASCADE)

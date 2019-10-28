@@ -1,8 +1,51 @@
 # summarization_sentiments
 
 Aplicación web para el analisis de sentimiento de restaurantes de la página 
-tripadvisor. En ella se puede recoger opiniones a tiempo real de restaurantes
+tripadvisor. En ella se puede recoger opiniones a tiempo real de restaurantes 
+a través de tecnicas de Web Scraping, 
 y obtener información rápida con gráficas de la librería Chart.js de Javascript
+
+## Vistas
+
+Vistas de un restaurante analizado:
+
+Historial por años
+
+![Alt text](./imgs/main1.png "Historial por años")
+
+Historial total por meses
+
+![Alt text](./imgs/meses.png "Historial por años")
+
+Palabras más utilizadas
+
+![Alt text](./imgs/words.png "Historial por años")
+
+Filtrado por un año concreto
+
+![Alt text](./imgs/main_year.png "Historial por años")
+
+Filtrado por un mes de un año concreto
+
+![Alt text](./imgs/main_year_mes.png "Historial por años")
+
+
+
+
+
+## Librerias
+
+Las librerías utilizadas han sido las siguientes:
+
+- Web Scraping
+    - Selenium
+    - Beautiful Soup
+- Base de datos
+    - Sqlite3
+- Tratamiento del texto
+    - Spacy
+- Modelo de machine learning
+    - Sklearn
 
 
 ## Estructura
